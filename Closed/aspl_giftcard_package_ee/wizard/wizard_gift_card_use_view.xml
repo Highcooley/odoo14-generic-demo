@@ -1,0 +1,41 @@
+<odoo>
+
+    <record id="wizard_gift_use_card" model="ir.ui.view">
+        <field name="name">wizard gift card use</field>
+        <field name="model">wizard.use.gift.card</field>
+        <field name="arch" type="xml">
+            <form string="Use Gift Card">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="amount"/>
+                            <field name="card_balance"/>
+                        </group>
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="gift_card_id" domain="[('customer_id','=',partner_id), ('state','=', 'confirm'), ('company_id', '=', company_id)]"/>
+                            <!-- <field name="journal_id"/> -->
+                            <field name="order_balance" readonly="1"/>
+                            <field name="card_pin" password="True"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" type="object" string="Add Payment" name="add_line"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gift_card_wizard" model="ir.actions.act_window">
+            <field name="name">Use Gift Card</field>
+            <field name="res_model">wizard.use.gift.card</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            
+    </record>
+
+</odoo>

@@ -1,0 +1,33 @@
+<odoo>
+
+    <record id="wizard_import_gift_card" model="ir.ui.view">
+        <field name="name">Wizard Import Gift Card</field>
+        <field name="model">import.gift.card</field>
+        <field name="arch" type="xml">
+            <form string="Use Gift Card">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="csv_import_file" filename="name"/>
+                            
+                        </group>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" type="object" string="Import" name="import_new_gift_card"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_import_gift_card" model="ir.actions.act_window">
+            <field name="name">Import Gift Card</field>
+            <field name="res_model">import.gift.card</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_import_gift_card" name="Import Gift Card" parent="gift_card_view" sequence="5" action="action_import_gift_card"/>
+</odoo>

@@ -1,0 +1,32 @@
+<odoo>
+
+    <record id="wizard_create_gift_card_view" model="ir.ui.view">
+        <field name="name">Wizard Create Gift Card</field>
+        <field name="model">wizard.create.gift.card</field>
+        <field name="arch" type="xml">
+            <form string="Use Gift Card">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="card_number"/>
+                            <field name="card_type"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" type="object" string="Confirm" name="create_new_gift_card"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- <record id="action_create_gift_card_view" model="ir.actions.act_window">
+            <field name="name">Create Gift Card</field>
+            <field name="res_model">wizard.create.gift.card</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    </record> -->
+
+</odoo>
