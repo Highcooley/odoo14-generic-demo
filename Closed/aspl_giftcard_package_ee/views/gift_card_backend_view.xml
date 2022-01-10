@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="aspl_gift_card_form" model="ir.ui.view">
+            <field name="name">aspl gift card form</field>
+            <field name="model">gift.card</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0">
+                    <header>
+                        <!-- <button name="assing_payment" type='object' class='oe_highlight' string="Confirm" attrs="{'invisible':['|', ('state', '=', 'confirm'), ('state', '=', 'cancelled')]}"/> -->
+                        <button name="cancel_card" type='object' class='oe_highlight' string="Cancel" attrs="{'invisible':['|', ('state', '=', 'draft'), ('state', '=', 'cancelled')]}"/>
+                        <button name="%(action_gift_card_change_owner_wizard)d" type='action' string="Change Owner" attrs="{'invisible':['|', ('state', '=', 'draft'), ('state', '=', 'cancelled')]}" groups="base.group_erp_manager"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="gift_card_usage_sale" type="object" class="oe_stat_button" icon="fa-list">
+                                <div class="o_stat_info">
+                                    <field name="usage_count_sale" class="o_stat_value" />
+                                    <span class="o_stat_text">Use In sale</span>
+                                </div>
+                            </button>
+                            <button name="gift_card_usage_pos" type="object" class="oe_stat_button" icon="fa-list">
+                                <div class="o_stat_info">
+                                    <field name="usage_count_pos" class="o_stat_value" />
+                                    <span class="o_stat_text">Use In POS</span>
+                                </div>
+                            </button>
+                            <button name="gift_card_recharge" type="object" class="oe_stat_button" icon="fa-money">
+                                <div class="o_stat_info">
+                                    <field name="recharge_count" class="o_stat_value" />
+                                    <span class="o_stat_text">Recharge</span>
+                                </div>
+                            </button>
+                            <button name="gift_card_owner_change_history" type="object" class="oe_stat_button" icon="fa-history">
+                                <div class="o_stat_info">
+                                    <field name="change_owner_count" class="o_stat_value" />
+                                    <span class="o_stat_text">Owner History</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="card_no" placeholder="Card Number" attrs="{'readonly': [('menual_card_number', '!=', True)], 'required': [('menual_card_number', '=', True)]}" />
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="is_active" widget="boolean_toggle"/>
+                                <field name="card_value"/>
+                                <field name="customer_id" required="1"/>
+                                <field name="usage_amount" readonly="True"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="menual_card_number" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="issue_date"/>
+                                <field name="expire_date" required="1"/>
+                                <field name="card_type"/>
+                                <field name="balance" readonly="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="gift_Card_tree_view" model="ir.ui.view">
+            <field name="name">Gift Card</field>
+            <field name="model">gift.card</field>
+            <field name="arch" type="xml">
+                <tree create="0">
+                    <field name="card_no"/>
+                    <field name="customer_id"/>
+                    <field name="card_value"/>
+                    <field name="balance"/>
+                    <field name="issue_date"/>
+                    <field name="expire_date"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+        <record id="gift_card_action" model="ir.actions.act_window">
+            <field name="name">Gift Card</field>
+            <field name="res_model">gift.card</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem 
+            name="Gift Card" 
+            id="gift_card_view" 
+            parent="sale.sale_menu_root" 
+            sequence="2"
+            groups="base.group_erp_manager,point_of_sale.group_pos_manager"
+            />
+        <menuitem id="gift_card_view_child" action="gift_card_action" sequence="1" parent="gift_card_view"/>
+
+
+        <!-- Gift Card usage -->
+        <record id="gift_Card_use_tree_view" model="ir.ui.view">
+            <field name="name">Gift Card Usage</field>
+            <field name="model">gift.card.use</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="partner_id"/>
+                    <field name="card_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+        <record id="giftcard_use_action" model="ir.actions.act_window">
+            <field name="name">Gift Card Usage</field>
+            <field name="res_model">gift.card.use</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <!-- Gift Card Owner History -->
+        <record id="gift_card_owner_history_tree_view" model="ir.ui.view">
+            <field name="name">Gift Card Owner History</field>
+            <field name="model">gift.owner.history</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0">
+                    <field name="customer_id"/>
+                    <field name="create_date" string="Date"/>
+                    <field name="user_id"/>
+                    <field name="card_amount"/>
+                </tree>
+            </field>
+        </record>
+        <record id="gift_card_owner_history_action" model="ir.actions.act_window">
+            <field name="name">Gift Card Owner History</field>
+            <field name="res_model">gift.owner.history</field>
+            <field name="view_mode">tree</field>
+        </record>
+        
+
+        <!-- Gift Card Exchange History -->
+        <record id="action_aspl_gift_card_exchange_history_tree" model="ir.actions.act_window">
+            <field name="name">Gift Card Exchange History</field>
+            <field name="res_model">gift.card.exchange.history</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem id="aspl_gift_card_exchange_history" name="Exchange Card History" parent="gift_card_view" sequence="3" action="action_aspl_gift_card_exchange_history_tree"/>
+
+
+        <!-- Gift Card Recharge -->
+        <record id="action_aspl_gift_card_recharged_tree" model="ir.actions.act_window">
+            <field name="name">Gift Card Recharge</field>
+            <field name="res_model">gift.card.recharge</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem id="aspl_gift_card_recharged_details" name="Recharged Card" parent="gift_card_view" sequence="2" action="action_aspl_gift_card_recharged_tree"/>
+        
+        
+        <!-- Gift Card Type -->
+        <record id="action_aspl_gift_card_type_form" model="ir.actions.act_window">
+            <field name="name">Gift Card Type</field>
+            <field name="res_model">gift.card.type</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="aspl_gift_card_type_details" name="Card Type" parent="gift_card_view" sequence="4" action="action_aspl_gift_card_type_form"/>
+
+        <!-- gift.card.exchange.history -->
+        <record id="aspl_gift_card_exchange_history_tree" model="ir.ui.view">
+            <field name="name">aspl gift card exchange history tree</field>
+            <field name="model">gift.card.exchange.history</field>
+            <field name="arch" type="xml">
+                <tree create="0">
+                    <field name="old_card_no"/>
+                    <field name="new_card_no"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_aspl_gift_card_exchange_history_tree" model="ir.actions.act_window">
+            <field name="name">Gift Card Exchange History</field>
+            <field name="res_model">gift.card.exchange.history</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="gift_Card_value_tree_view" model="ir.ui.view">
+            <field name="name">Gift Card Value</field>
+            <field name="model">gift.card.value</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="amount"/>
+                    <field name="sequence"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        <record id="gift_card_value_action" model="ir.actions.act_window">
+            <field name="name">Gift Card Value</field>
+            <field name="res_model">gift.card.value</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem action="gift_card_value_action" id="gift_card_value_view_child" parent="gift_card_view"/>
+<!--        <menuitem action="giftcard_use_action" id="gift_card_use_view_child" parent="gift_card_view"/>-->
+        <menuitem id="pos_gift_card_exchange_history" name="Exchange Card History" parent="gift_card_view"
+                  sequence="4" action="action_aspl_gift_card_exchange_history_tree"/>
+        <!-- <menuitem action="gift_card_value_action" id="gift_card_value_view_child" parent="gift_card_view"/> -->
+    </data>
+</odoo>

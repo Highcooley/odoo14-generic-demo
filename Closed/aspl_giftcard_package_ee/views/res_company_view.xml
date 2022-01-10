@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="inherit_view_res_company" model="ir.ui.view">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Gift Card">
+                        <group>
+                            <group>
+                                <field name="is_gift_card"/>
+                                <field name="gift_card_product_id" domain="[('is_gift_card', '=', True)]"/>
+                                <field name="gc_journal_id" domain="[('gift_card_journal', '=', True), ('company_id', '=', id)]"/>
+                                <field name="gift_card_account_id"/>
+                                <field name="default_exp_month"/>
+                                <field name="menual_card_number"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

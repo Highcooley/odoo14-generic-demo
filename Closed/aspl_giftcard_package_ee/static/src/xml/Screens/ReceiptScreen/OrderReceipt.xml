@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('before-footer')]" position="inside">
+            <t t-if="props.order.giftcard.length !== 0">
+                <div class="pos-receipt">
+                    <br/>
+                    <div>-----------------------------------------------------</div>
+                    <div class="pos-center-align">Card Details</div>
+                    <div>-----------------------------------------------------</div>
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td class="pos-left-align">Customer Name:</td>
+                                <t t-set="customer_id" t-value="props.order.giftcard[0]['customer_id']"/>
+                                <td class="pos-right-align"><t t-esc="env.pos.db.get_partner_by_id(customer_id).name"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Card No:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.giftcard[0]['card_no']"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Expire Date:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.giftcard[0]['expire_date']"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Card Value:</td>
+                                <td class="pos-right-align"> <t t-esc="props.order.giftcard[0]['card_value']"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div class="pos-center-align" align="center">
+                        <img style="width:300px;height:100px;" t-att-src='receipt.barcode' alt="Logo"/>
+                    </div>
+                </div>
+            </t>
+            <t t-if="props.order.redeem !== false">
+                <div class="pos-receipt">
+                     <br/>
+                    <div>-----------------------------------------------------</div>
+                    <div class="pos-center-align">Card Details</div>
+                    <div>-----------------------------------------------------</div>
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td class="pos-left-align">Customer Name:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.redeem.customer_name"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Card No:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.redeem.redeem_card"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Expiry Date:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.redeem.expiry_date"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Card Balance:</td>
+                                <td class="pos-right-align"> <t
+                                        t-esc="env.pos.format_currency(props.order.redeem.redeem_remaining)"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div class="pos-center-align" align="center">
+                        <img style="width:300px;height:100px;" t-att-src='receipt.barcode' alt="Logo"/>
+                    </div>
+                </div>
+            </t>
+            <t t-if="props.order.recharge !== false">
+                <div class="pos-receipt">
+                     <br/>
+                    <div>-----------------------------------------------------</div>
+                    <div class="pos-center-align">Card Details</div>
+                    <div>-----------------------------------------------------</div>
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td class="pos-left-align">Customer Name:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.recharge.customer_name"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Card No:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.recharge.recharge_card_no"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Expiry Date:</td>
+                                <td class="pos-right-align"><t t-esc="props.order.recharge.expire_date"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Recharge Amount:</td>
+                                <td class="pos-right-align"> <t
+                                        t-esc="env.pos.format_currency(props.order.recharge.recharge_card_amount)"/></td>
+                            </tr>
+                            <tr>
+                                <td class="pos-left-align">Card Amount:</td>
+                                <td class="pos-right-align"> <t
+                                        t-esc="env.pos.format_currency(props.order.recharge.total_card_amount)"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div class="pos-center-align" align="center">
+                        <img style="width:300px;height:100px;" t-att-src='receipt.barcode' alt="Logo"/>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>

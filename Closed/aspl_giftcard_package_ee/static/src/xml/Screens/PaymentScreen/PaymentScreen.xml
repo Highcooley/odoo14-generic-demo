@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PaymentScreenInh" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[@class='button back']" position="replace">
+            <div class="button back" t-on-click="payment_back">
+                <i class="fa fa-angle-double-left fa-fw"></i>
+                <span class="back_text">Back</span>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='paymentmethods-container']" position="replace">
+            <div class="paymentmethods-container">
+                <PaymentScreenPaymentLines paymentLines="paymentLines"/>
+                <div class="paymentmethods">
+                    <t t-foreach="payment_methods_config" t-as="paymentMethod"
+                       t-key="paymentMethod.id">
+                        <t t-if="!paymentMethod.allow_for_gift_card">
+                            <PaymentMethodButton paymentMethod="paymentMethod"/>
+                        </t>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='payment-controls']" position="inside">
+            <t t-if="env.pos.config.enable_gift_card and env.pos.get_order().get_client() and props.showGiftButton !== false">
+                <div class="giftCard-controls" style="margin-top: 13px;">
+                    <div class="button js_gift_card"
+                         t-att-class="{ giftCard_highlight: currentOrder.get_is_gift_card_payment()}"
+                         t-on-click="useGiftCardForPayment()">
+                        <img src="/aspl_giftcard_package_ee/static/src/img/icons/clipart2943916.png"
+                             class="fa fa-file-text-o"/>Gift Card
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

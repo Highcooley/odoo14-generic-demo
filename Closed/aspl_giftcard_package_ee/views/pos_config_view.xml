@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="aspl_gift_card_config_view_form">
+            <field name="name">pos.config.form.view.inherit</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <h2 name="order">Giftcard</h2>
+                    <div class="row mt16 o_settings_container" id="pos_wallet">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="enable_wallet">
+                            <div class="o_setting_left_pane">
+                                <field name="enable_gift_card"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="enable_gift_card"/>
+                                <div class="text-muted" id="enable_wallet">
+                                    Enable to use Gift Card in POS Interface.
+                                </div>
+                                <div class="content-group mt16"
+                                     attrs="{'invisible' : [('enable_gift_card', '=', False)]}">
+                                    <div class="row mt16">
+                                        <label string="Product" for="gift_card_product_id"
+                                               class="col-md-3 o_light_label"/>
+                                        <field name="gift_card_product_id" domain="[('available_in_pos','=','True'), ('is_gift_card', '=', True)]"
+                                               attrs="{'invisible':[('enable_gift_card','=',False)],'required':[('enable_gift_card','=',True)]}"
+                                               options="{'no_create': True,'no_open':True, 'no_edit': True}"/>
+                                    </div>
+                                    <div class="row mt16">
+                                        <label string="Payment Method" for="enable_journal_id"
+                                               class="col-md-3 o_light_label"/>
+                                        <field name="enable_journal_id"
+                                               domain="[('allow_for_gift_card', '=',True)]"
+                                               attrs="{'invisible':[('enable_gift_card','=',False)],'required':[('enable_gift_card','=',True)]}"
+                                               context="{'payment_method_ids': payment_method_ids, 'config_jr': True}"
+                                               options="{'no_create': True,'no_open':True, 'no_edit': True}"/>
+                                    </div>
+                                    <div class="row mt18">
+                                        <div style="width: 100%;">
+                                            <div style="width: 41%; float: left; margin-top: 16px; ">
+                                                <label string="Enable Confirmation Message" for="msg_before_card_pay"
+                                                       class="col-md-12 o_light_label"/>
+                                            </div>
+                                            <div style="width: 57%; float: right; margin-top: 16px; ">
+                                                <field name="msg_before_card_pay"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

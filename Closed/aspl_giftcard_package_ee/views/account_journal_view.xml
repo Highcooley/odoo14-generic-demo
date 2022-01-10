@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_account_journal_form_inh" model="ir.ui.view">
+            <field name="name">View Account Journal</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="gift_card_journal"/>
+                </xpath>
+                <xpath expr="//page[@name='journal_entries']" position="replace">
+                    <page name="journal_entries" string="Payments Configuration" attrs="{'invisible': [('type', 'in', ['sale', 'purchase', 'general']), ('gift_card_journal', '!=', True)]}">
+                        <group>
+                            <group string="Incoming Payments">
+                                <field name="payment_debit_account_id" attrs="{'required': [('id', '!=', False), ('type', 'in', ('bank', 'cash')), ('gift_card_journal', '!=', True)], 'invisible': [('type', 'not in', ('bank', 'cash')), ('gift_card_journal', '!=', True)]}" groups="account.group_account_readonly"/>
+                                <field name="inbound_payment_method_ids" string="Methods" widget="many2many_checkboxes" attrs="{'invisible': [('type', 'not in', ['bank', 'cash'])]}"/>
+                            </group>
+                            <group string="Outgoing Payments">
+                                <field name="id" invisible="1"/>
+                                <field name="payment_credit_account_id" attrs="{'required': [('id', '!=', False), ('type', 'in', ('bank', 'cash')), ('gift_card_journal', '!=', True)], 'invisible': [('type', 'not in', ('bank', 'cash')), ('gift_card_journal', '!=', True)]}" groups="account.group_account_readonly"/>
+                                <field name="outbound_payment_method_ids" string="Methods" widget="many2many_checkboxes" attrs="{'invisible': [('type', 'not in', ['bank', 'cash'])]}"/>
+                            </group>
+                            <group name="outgoing_payment"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

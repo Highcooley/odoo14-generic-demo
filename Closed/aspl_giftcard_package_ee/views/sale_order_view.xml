@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="inherit_view_sale_order" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="new_gift_card_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Use Gift Card">
+                        <button type="action" name="%(aspl_giftcard_package_ee.action_gift_card_wizard)d" class="oe_inline oe_highlight" string="Use Gift Card"/>
+                        <field name="gift_card_use_ids">
+                            <tree create="0">
+                                <field name="partner_id"/>
+                                <field name="card_id"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

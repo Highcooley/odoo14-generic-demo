@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="giftCardRedeemPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title"/>
+                    </header>
+                    <span class="redeem_popup">Due Amount : <t
+                            t-esc="env.pos.format_currency(env.pos.get_order().get_due())"/></span>
+                    <br/>
+                    <br/>
+                    <div class="redeem_popup">
+                        <table border="0" align="center">
+                            <t t-if="state.showCardNumberInput">
+                                <tr>
+                                    <td colspan="2">
+                                        <input style="width:100%;" type="text" t-model="state.GiftCardNumber"
+                                               t-ref="gift_card_number"
+                                               placeholder="Enter Card Number" t-on-keypress="CheckGiftCardBalance"/>
+                                    </td>
+                                </tr>
+                                <br/>
+                            </t>
+                            <tr t-if="state.displayCustomer" style="text-transform: uppercase">
+                                <td colspan="2"> Hello <t t-esc="state.displayCustomer"/> </td>
+                            </tr>
+                            <tr t-if="state.singleCardNumber">
+                                <td style="padding-right:25px;">Your Card No :  </td>
+                                <td style="float:left;"><t t-esc="state.singleCardNumber"/> </td>
+                            </tr>
+                            <tr t-if="state.displayAmount">
+                                <td style="padding-right:25px;"> Your Balance :</td>
+                                <td style="float:left;"><t t-esc="state.displayAmount"/> </td>
+                            </tr>
+                            <tr id="in_balance" t-if="!state.showAmountInput">
+                                <td></td>
+                                <td> <label style="color:red">Insufficient Balance.</label> </td>
+                            </tr>
+                            <tr t-if="state.showAmountInput">
+                                <td colspan="2">
+                                    <input style="width:100%" class="redeem_amount_input" type="text"
+                                           t-model="state.GiftCardAmount" t-ref="gift_card_amount"
+                                           placeholder="Enter Amount"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <footer class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText"/>
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText"/>
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

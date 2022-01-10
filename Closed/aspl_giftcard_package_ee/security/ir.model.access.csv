@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gift_card,access_gift_card,model_gift_card,base.group_user,1,1,1,1
+access_gift_card_use,access_gift_card_use,model_gift_card_use,base.group_user,1,1,1,1
+access_gift_card_recharge,access_gift_card_recharge,model_gift_card_recharge,base.group_user,1,1,1,1
+access_gift_card_type,access_gift_card_type,model_gift_card_type,base.group_user,1,1,1,1
+access_gift_card_exchange_history,access_gift_card_exchange_history,model_gift_card_exchange_history,base.group_user,1,1,1,1
+access_gift_card_value,access_gift_card_value,model_gift_card_value,base.group_user,1,1,1,1
+access_wizard_use_gift_card,access_wizard_use_gift_card,model_wizard_use_gift_card,base.group_user,1,1,1,1
+access_gift_owner_history,access_gift_owner_history,model_gift_owner_history,base.group_user,1,1,1,1
+access_gift_card_change_owner_wizard,access_gift_card_change_owner_wizard,model_gift_card_change_owner_wizard,base.group_user,1,1,1,1
+access_import_gift_card,access_import_gift_card,model_import_gift_card,base.group_user,1,1,1,1
+access_wizard_create_gift_card,access_wizard_create_gift_card,model_wizard_create_gift_card,base.group_user,1,1,1,1

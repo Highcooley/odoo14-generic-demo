@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="aspl_gift_card_product" model="product.product">
+            <field name="name">Gift Card</field>
+            <field name="available_in_pos">True</field>
+            <field name="type">service</field>
+            <field name="sale_ok">True</field>
+            <field name="is_gift_card">True</field>
+            <field name="available_in_pos">True</field>
+            <field name="supplier_taxes_id"
+                   search="[('type_tax_use', '=', 'purchase'), ('tax_group_id', '=', 'VAT Untaxed')]"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+        </record>
+        <record id="aspl_gift_card_product_type_gold" model="gift.card.type">
+            <field name="name">Gold</field>
+            <field name="code">001</field>
+        </record>
+        <record id="aspl_gift_card_product_type_silver" model="gift.card.type">
+            <field name="name">Silver</field>
+            <field name="code">002</field>
+        </record>
+        <record id="aspl_gift_card_product_type_platinum" model="gift.card.type">
+            <field name="name">Platinum</field>
+            <field name="code">003</field>
+        </record>
+    </data>
+</odoo>
