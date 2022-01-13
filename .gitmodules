@@ -2,3 +2,8 @@
 	path = OCA/mis-builder
 	url = git@github.com:OCA/mis-builder.git
 	branch = 14.0
+
+[submodule "OCA/hr-holidays"]
+	path = OCA/hr-holidays
+	url = git@github.com:OCA/hr-holidays.git
+	branch = 14.0
